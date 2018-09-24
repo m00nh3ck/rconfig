@@ -24,6 +24,8 @@ class diff {
     var $changes = array();
     var $diff = array();
     var $linepadding = null;
+    var $show_changes_only = true; // show only lines which has changed in the report
+ 
     
     function doDiff($old, $new) {
         if (!is_array($old))
@@ -169,11 +171,15 @@ class diff {
                     $class = ($insert) ? 'ins_end' : $class;
                     $delete = false;
                     $insert = false;
-                    $ret.= '<tr><th>' . $count_old . '</th>';
-                    $ret.= '<td class="' . $class . '">' . $this->formatcode($k) . '</td>';
-                    $ret.= '<th>' . $count_new . '</th>';
-                    $ret.= '<td class="' . $class . '">' . $this->formatcode($k) . '</td>';
-                    $ret.= '</tr>';
+                  
+                    if ($this->show_changes_only == false){
+                        $ret.= '<tr><th>' . $count_old . '</th>';
+                        $ret.= '<td class="' . $class . '">' . $this->formatcode($k) . '</td>';
+                        $ret.= '<th>' . $count_new . '</th>';
+                        $ret.= '<td class="' . $class . '">' . $this->formatcode($k) . '</td>';
+                        $ret.= '</tr>';
+                    }               
+                  
                     $count_old++;
                     $count_new++;
                 }
